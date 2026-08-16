@@ -1,0 +1,57 @@
+{
+	"name": "PROJECTREGEL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "PROJECTREGEL_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "PROJECT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "BEGROTEBEDRAG",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "STARTDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EINDDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "JAAR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MEMO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OMSCHRIJVING",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "PROJECTREGEL"
+		}
+	}
+}

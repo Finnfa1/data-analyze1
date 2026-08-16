@@ -1,0 +1,58 @@
+{
+	"name": "ELEMENTWAARDE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ELEMENTWAARDE_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ELEMENT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ALFA",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NUM",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "ELEMENT_DEC",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PUNTEN",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "INGANGSDATUM",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ELEMENTWAARDE"
+		}
+	}
+}

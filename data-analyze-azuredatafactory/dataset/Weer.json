@@ -1,0 +1,15 @@
+{
+	"name": "Weer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestService1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "/current.json key=33c28c95392c4975a56123646262806  q=Maa"
+		},
+		"schema": []
+	}
+}

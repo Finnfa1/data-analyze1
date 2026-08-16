@@ -1,0 +1,46 @@
+{
+	"name": "OLAPWERKVERZOEK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLAP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "WERKVERZOEK_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OMSCHRIJVING",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MEMO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AFGEROND",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MELDDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BONJAAR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BONNMMR",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIMWerkverzoek"
+		}
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"name": "OBJECTEN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "INGANGSDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OBJECT_TYPE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DAEB_YN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ADRES_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "NAAM",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "OBJECTEN"
+		}
+	}
+}

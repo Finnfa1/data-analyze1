@@ -1,0 +1,77 @@
+{
+	"name": "OBJECTCOMPLEX",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLAP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "INGANGSDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VOLGNUMMER",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TYPEN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATUMEINDE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SUBCOMPLEX",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ETAGE",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GANG",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "STATUS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "POSTCODE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HUISNUMMER",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "STRAATNAAM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NAAM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DAEB_YN",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIMObject"
+		}
+	}
+}

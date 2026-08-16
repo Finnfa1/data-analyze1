@@ -1,0 +1,31 @@
+{
+	"name": "WERKSOORT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SOORT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "CODE",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OMSCHRIJVING",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "WERKSOORT"
+		}
+	}
+}

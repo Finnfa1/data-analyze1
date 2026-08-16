@@ -1,0 +1,106 @@
+{
+	"name": "WERKOPDRACHT",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "WERKSOORT",
+						"type": "DatasetReference"
+					},
+					"name": "WERKSOORT"
+				},
+				{
+					"dataset": {
+						"referenceName": "WERKOPDRACHT",
+						"type": "DatasetReference"
+					},
+					"name": "WERKOPDACHT"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OLAPWERKOPDRACHT",
+						"type": "DatasetReference"
+					},
+					"name": "OLAP"
+				}
+			],
+			"transformations": [
+				{
+					"name": "WERKSOORINOPDRACHT"
+				},
+				{
+					"name": "dropid"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          SOORT_ID as long,",
+				"          CODE as long,",
+				"          OMSCHRIJVING as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> WERKSOORT",
+				"source(output(",
+				"          OPDRACHT_ID as long,",
+				"          SOORT_ID as long,",
+				"          WERKVERZOEK_ID as long,",
+				"          OPDRACHTDATUM as string,",
+				"          STARTDATUM as string,",
+				"          EINDDATUM as string,",
+				"          BON as long,",
+				"          AFGEROND as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> WERKOPDACHT",
+				"WERKOPDACHT, WERKSOORT join(WERKOPDACHT@SOORT_ID == WERKSOORT@SOORT_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> WERKSOORINOPDRACHT",
+				"WERKSOORINOPDRACHT select(mapColumn(",
+				"          OPDRACHT_ID,",
+				"          SOORT_ID = WERKOPDACHT@SOORT_ID,",
+				"          WERKVERZOEK_ID,",
+				"          OPDRACHTDATUM,",
+				"          STARTDATUM,",
+				"          EINDDATUM,",
+				"          BON,",
+				"          AFGEROND,",
+				"          SOORT_ID = WERKSOORT@SOORT_ID,",
+				"          CODE,",
+				"          OMSCHRIJVING",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> dropid",
+				"dropid sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          OPDRACHT_ID as long,",
+				"          OPDRACHTDATUM as string,",
+				"          STARTDATUM as string,",
+				"          EINDDATUM as string,",
+				"          BON as string,",
+				"          AFGEROND as string,",
+				"          CODE as long,",
+				"          WERKSOORT_OMSCHRIJVING as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> OLAP"
+			]
+		}
+	}
+}

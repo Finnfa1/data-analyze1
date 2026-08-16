@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "df-olap-cdfs01"
+		},
+		"ELEMENTXML_connectionString": {
+			"value": ""
+		},
+		"LOGGING_DATAFACTORY_connectionString": {
+			"value": ""
+		},
+		"Legacydatabaseconnection_password": {
+			"value": ""
+		},
+		"OLAP_password": {
+			"value": ""
+		},
+		"OLTP_password": {
+			"value": ""
+		},
+		"XMLLinkedservicecdfs01_connectionString": {
+			"value": ""
+		},
+		"legacy_password": {
+			"value": ""
+		},
+		"Legacydatabaseconnection_properties_typeProperties_server": {
+			"value": "sql-backend-cdfs01.database.windows.net"
+		},
+		"Legacydatabaseconnection_properties_typeProperties_database": {
+			"value": "SQL_Gepland_Onderhoud_legacy_CDFS01"
+		},
+		"Legacydatabaseconnection_properties_typeProperties_userName": {
+			"value": "cdfs"
+		},
+		"OLAP_properties_typeProperties_server": {
+			"value": "sql-cdfs03.database.windows.net"
+		},
+		"OLAP_properties_typeProperties_database": {
+			"value": "sql-olap-cdfs01"
+		},
+		"OLAP_properties_typeProperties_userName": {
+			"value": "cdfs"
+		},
+		"OLTP_properties_typeProperties_server": {
+			"value": "sql-cdfs03.database.windows.net"
+		},
+		"OLTP_properties_typeProperties_database": {
+			"value": "sql-oltp-cdfs01"
+		},
+		"OLTP_properties_typeProperties_userName": {
+			"value": "cdfs"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "http://api.weatherapi.com/v1"
+		},
+		"legacy_properties_typeProperties_server": {
+			"value": "sql-backend-cdfs01.database.windows.net"
+		},
+		"legacy_properties_typeProperties_database": {
+			"value": "SQL_Gepland_Onderhoud_legacy_CDFS01"
+		},
+		"legacy_properties_typeProperties_userName": {
+			"value": "cdfs"
+		}
+	}
+}

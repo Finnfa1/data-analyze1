@@ -1,0 +1,988 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "df-olap-cdfs01"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PROJECT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PROJECT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OMSCHRIJVING",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BEGROTEBEDRAGBTW",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "STARTDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EINDDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MEMO",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PROJECT"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROJECTREGEL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PROJECTREGEL_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "PROJECT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BEGROTEBEDRAG",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "STARTDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EINDDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "JAAR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MEMO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OMSCHRIJVING",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "PROJECTREGEL"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WERKOPDRACHT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "OPDRACHT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "SOORT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "WERKVERZOEK_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OPDRACHTDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "STARTDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EINDDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BON",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "AFGEROND",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "WERKOPDRACHT"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WERKSOORT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SOORT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "CODE",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OMSCHRIJVING",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "WERKSOORT"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WERKVERZOEK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "WERKVERZOEK_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OMSCHRIJVING",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AFGEROND",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MELDDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BONJAAR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BONNMMR",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "CST_ID_INVOER",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "MEMO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PROJECT_ID",
+						"type": "bigint",
+						"precision": 19
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "WERKVERZOEK"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Weer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RestService1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "/current.json key=33c28c95392c4975a56123646262806  q=Maa"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FACT')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "WERKVERZOEK",
+								"type": "DatasetReference"
+							},
+							"name": "WERKVERZOEK"
+						},
+						{
+							"dataset": {
+								"referenceName": "WERKOPDRACHT",
+								"type": "DatasetReference"
+							},
+							"name": "WERKOPDRACHT"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "OLAPFACT",
+								"type": "DatasetReference"
+							},
+							"name": "FACT"
+						}
+					],
+					"transformations": [
+						{
+							"name": "WERKVERZOEKID"
+						},
+						{
+							"name": "join1"
+						},
+						{
+							"name": "WERKOPDRACHTID"
+						},
+						{
+							"name": "surrogateKey1"
+						},
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          WERKVERZOEK_ID as long,",
+						"          OMSCHRIJVING as string,",
+						"          AFGEROND as string,",
+						"          MELDDATUM as string,",
+						"          BONJAAR as string,",
+						"          BONNMMR as long,",
+						"          CST_ID_INVOER as long,",
+						"          BOT_ID as long,",
+						"          MEMO as string,",
+						"          PROJECT_ID as long",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> WERKVERZOEK",
+						"source(output(",
+						"          OPDRACHT_ID as long,",
+						"          SOORT_ID as long,",
+						"          WERKVERZOEK_ID as long,",
+						"          OPDRACHTDATUM as string,",
+						"          STARTDATUM as string,",
+						"          EINDDATUM as string,",
+						"          BON as long,",
+						"          AFGEROND as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> WERKOPDRACHT",
+						"WERKVERZOEK select(mapColumn(",
+						"          WERKVERZOEK_ID,",
+						"          BOT_ID,",
+						"          PROJECT_ID",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> WERKVERZOEKID",
+						"WERKVERZOEKID, WERKOPDRACHTID join(WERKVERZOEKID@WERKVERZOEK_ID == WERKOPDRACHTID@WERKVERZOEK_ID,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"WERKOPDRACHT select(mapColumn(",
+						"          OPDRACHT_ID,",
+						"          SOORT_ID,",
+						"          WERKVERZOEK_ID",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> WERKOPDRACHTID",
+						"select1 keyGenerate(output(WERK_ID as long),",
+						"     startAt: 1L,",
+						"     stepValue: 1L) ~> surrogateKey1",
+						"join1 select(mapColumn(",
+						"          WERKVERZOEK_ID = WERKVERZOEKID@WERKVERZOEK_ID,",
+						"          BOT_ID,",
+						"          PROJECT_ID,",
+						"          OPDRACHT_ID",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"surrogateKey1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          WERK_ID as long,",
+						"          BOT_ID as long,",
+						"          WERKVERZOEK_ID as long,",
+						"          OPDRACHT_ID as long,",
+						"          WEER_ID as long",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          WERK_ID,",
+						"          BOT_ID,",
+						"          WERKVERZOEK_ID,",
+						"          OPDRACHT_ID",
+						"     )) ~> FACT"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/WERKVERZOEK')]",
+				"[concat(variables('factoryId'), '/datasets/WERKOPDRACHT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WERKOPDRACHT')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "WERKSOORT",
+								"type": "DatasetReference"
+							},
+							"name": "WERKSOORT"
+						},
+						{
+							"dataset": {
+								"referenceName": "WERKOPDRACHT",
+								"type": "DatasetReference"
+							},
+							"name": "WERKOPDACHT"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "OLAPWERKOPDRACHT",
+								"type": "DatasetReference"
+							},
+							"name": "OLAP"
+						}
+					],
+					"transformations": [
+						{
+							"name": "WERKSOORINOPDRACHT"
+						},
+						{
+							"name": "dropid"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          SOORT_ID as long,",
+						"          CODE as long,",
+						"          OMSCHRIJVING as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> WERKSOORT",
+						"source(output(",
+						"          OPDRACHT_ID as long,",
+						"          SOORT_ID as long,",
+						"          WERKVERZOEK_ID as long,",
+						"          OPDRACHTDATUM as string,",
+						"          STARTDATUM as string,",
+						"          EINDDATUM as string,",
+						"          BON as long,",
+						"          AFGEROND as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> WERKOPDACHT",
+						"WERKOPDACHT, WERKSOORT join(WERKOPDACHT@SOORT_ID == WERKSOORT@SOORT_ID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> WERKSOORINOPDRACHT",
+						"WERKSOORINOPDRACHT select(mapColumn(",
+						"          OPDRACHT_ID,",
+						"          SOORT_ID = WERKOPDACHT@SOORT_ID,",
+						"          WERKVERZOEK_ID,",
+						"          OPDRACHTDATUM,",
+						"          STARTDATUM,",
+						"          EINDDATUM,",
+						"          BON,",
+						"          AFGEROND,",
+						"          SOORT_ID = WERKSOORT@SOORT_ID,",
+						"          CODE,",
+						"          OMSCHRIJVING",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> dropid",
+						"dropid sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          OPDRACHT_ID as long,",
+						"          OPDRACHTDATUM as string,",
+						"          STARTDATUM as string,",
+						"          EINDDATUM as string,",
+						"          BON as string,",
+						"          AFGEROND as string,",
+						"          CODE as long,",
+						"          WERKSOORT_OMSCHRIJVING as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> OLAP"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/WERKSOORT')]",
+				"[concat(variables('factoryId'), '/datasets/WERKOPDRACHT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAPPIPELINE')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "werkverzoek",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "WERKVERZOEK_ID",
+											"type": "bigint",
+											"precision": 19
+										},
+										"sink": {
+											"name": "WERKVERZOEK_ID",
+											"type": "bigint",
+											"precision": 19
+										}
+									},
+									{
+										"source": {
+											"name": "OMSCHRIJVING",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "OMSCHRIJVING",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MEMO",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "MEMO",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AFGEROND",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "AFGEROND",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MELDDATUM",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "MELDDATUM",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BONJAAR",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "BONJAAR",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BONNMMR",
+											"type": "bigint",
+											"precision": 19
+										},
+										"sink": {
+											"name": "BONNMMR",
+											"type": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "WERKVERZOEK",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "OLAPWERKVERZOEK",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "PROJECT",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "werkverzoek",
+								"dependencyConditions": [
+									"Succeeded",
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PROJECT_ID",
+											"type": "bigint",
+											"precision": 19
+										},
+										"sink": {
+											"name": "PROJECT_ID",
+											"type": "bigint",
+											"precision": 19
+										}
+									},
+									{
+										"source": {
+											"name": "OMSCHRIJVING",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "OMSCHRIJVING",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BEGROTEBEDRAGBTW",
+											"type": "float",
+											"precision": 15
+										},
+										"sink": {
+											"name": "BEGROTEBEDRAGBTW",
+											"type": "float",
+											"precision": 15
+										}
+									},
+									{
+										"source": {
+											"name": "STARTDATUM",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "STARTDATUM",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "EINDDATUM",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "EINDDATUM",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MEMO",
+											"type": "nvarchar"
+										},
+										"sink": {
+											"name": "MEMO",
+											"type": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PROJECT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "OLAPRPOJECT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "WERKOPDRACHT",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "object",
+								"dependencyConditions": [
+									"Succeeded",
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "WERKOPDRACHT",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"WERKSOORT": {},
+									"WERKOPDACHT": {},
+									"OLAP": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "PROJECT",
+								"dependencyConditions": [
+									"Succeeded",
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "OBJECTEN",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "OLAPOBJECT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "FACTWERK",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "WERKOPDRACHT",
+								"dependencyConditions": [
+									"Succeeded",
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "FACT",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"WERKVERZOEK": {},
+									"WERKOPDRACHT": {},
+									"FACT": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/WERKVERZOEK')]",
+				"[concat(variables('factoryId'), '/datasets/PROJECT')]",
+				"[concat(variables('factoryId'), '/dataflows/WERKOPDRACHT')]",
+				"[concat(variables('factoryId'), '/dataflows/FACT')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dagelijks')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "deze trigger doet dagelijks",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "OLAPPIPELINE",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2026-06-28T15:26:00",
+						"timeZone": "W. Europe Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								0
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/OLAPPIPELINE')]"
+			]
+		}
+	]
+}

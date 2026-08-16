@@ -1,0 +1,62 @@
+{
+	"name": "WERKVERZOEK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "WERKVERZOEK_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OMSCHRIJVING",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AFGEROND",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MELDDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BONJAAR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BONNMMR",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "CST_ID_INVOER",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "MEMO",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PROJECT_ID",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "WERKVERZOEK"
+		}
+	}
+}

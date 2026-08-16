@@ -1,0 +1,39 @@
+{
+	"name": "ADRES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ADRES_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "POSTCODE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HUISNUMMER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "STRAATNAAM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WOONPLAATS",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ADRES"
+		}
+	}
+}

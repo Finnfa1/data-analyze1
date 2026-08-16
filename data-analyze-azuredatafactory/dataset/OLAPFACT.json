@@ -1,0 +1,42 @@
+{
+	"name": "OLAPFACT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLAP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "WERK_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "WERKVERZOEK_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OPDRACHT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "WEER_ID",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FACTWerk"
+		}
+	}
+}

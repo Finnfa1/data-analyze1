@@ -1,0 +1,51 @@
+{
+	"name": "OLAPWERKOPDRACHT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLAP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "OPDRACHT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OPDRACHTDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "STARTDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EINDDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BON",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AFGEROND",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CODE",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "WERKSOORT_OMSCHRIJVING",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIMWerkopdracht"
+		}
+	}
+}

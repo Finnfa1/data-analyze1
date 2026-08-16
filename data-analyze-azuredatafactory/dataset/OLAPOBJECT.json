@@ -1,0 +1,38 @@
+{
+	"name": "OLAPOBJECT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLAP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "INGANGSDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OBJECT_TYPE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DAEB_YN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NAAM",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIMOBject"
+		}
+	}
+}

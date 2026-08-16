@@ -1,0 +1,865 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "df-olap-cdfs01"
+		},
+		"ELEMENTXML_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ELEMENTXML'"
+		},
+		"LOGGING_DATAFACTORY_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LOGGING_DATAFACTORY'"
+		},
+		"Legacydatabaseconnection_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Legacydatabaseconnection'"
+		},
+		"OLAP_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OLAP'"
+		},
+		"OLTP_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OLTP'"
+		},
+		"XMLLinkedservicecdfs01_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'XMLLinkedservicecdfs01'"
+		},
+		"legacy_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'legacy'"
+		},
+		"Legacydatabaseconnection_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-backend-cdfs01.database.windows.net"
+		},
+		"Legacydatabaseconnection_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "SQL_Gepland_Onderhoud_legacy_CDFS01"
+		},
+		"Legacydatabaseconnection_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "cdfs"
+		},
+		"OLAP_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-cdfs03.database.windows.net"
+		},
+		"OLAP_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sql-olap-cdfs01"
+		},
+		"OLAP_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "cdfs"
+		},
+		"OLTP_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-cdfs03.database.windows.net"
+		},
+		"OLTP_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sql-oltp-cdfs01"
+		},
+		"OLTP_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "cdfs"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://api.weatherapi.com/v1"
+		},
+		"legacy_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-backend-cdfs01.database.windows.net"
+		},
+		"legacy_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "SQL_Gepland_Onderhoud_legacy_CDFS01"
+		},
+		"legacy_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "cdfs"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ELEMENTXML')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('ELEMENTXML_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LOGGING_DATAFACTORY')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "hier gaan de datafactory logs",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LOGGING_DATAFACTORY_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Legacydatabaseconnection')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('Legacydatabaseconnection_properties_typeProperties_server')]",
+					"database": "[parameters('Legacydatabaseconnection_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('Legacydatabaseconnection_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Legacydatabaseconnection_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAP')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "OLAP LINKED SERVICE",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('OLAP_properties_typeProperties_server')]",
+					"database": "[parameters('OLAP_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('OLAP_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('OLAP_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLTP')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('OLTP_properties_typeProperties_server')]",
+					"database": "[parameters('OLTP_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('OLTP_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('OLTP_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestService1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/XMLLinkedservicecdfs01')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "leest xml bestandern vanuit een azure storage account",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('XMLLinkedservicecdfs01_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/legacy')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('legacy_properties_typeProperties_server')]",
+					"database": "[parameters('legacy_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('legacy_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('legacy_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ADRES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ADRES_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "POSTCODE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "HUISNUMMER",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "STRAATNAAM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WOONPLAATS",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "ADRES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/COMPLEX')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OBJECTINGANGSDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "INGANGSDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VOLGNUMMER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TYPEN",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATUMEINDE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SUBCOMPLEX",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ETAGE",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GANG",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "COMPLEX_STATUS",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "COMPLEX"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ELEMENT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ELEMENT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "VOLGNUMMER",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "WAARDEAANDUIDING",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ELEMENT",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "ELEMENT"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ELEMENTWAARDE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ELEMENTWAARDE_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "ELEMENT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "ALFA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NUM",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "ELEMENT_DEC",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PUNTEN",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "INGANGSDATUM",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "ELEMENTWAARDE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OBJECTCOMPLEX')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLAP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "INGANGSDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VOLGNUMMER",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TYPEN",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DATUMEINDE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SUBCOMPLEX",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ETAGE",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GANG",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "STATUS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "POSTCODE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "HUISNUMMER",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "STRAATNAAM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NAAM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DAEB_YN",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIMObject"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLAP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OBJECTEN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLTP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "INGANGSDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OBJECT_TYPE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DAEB_YN",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ADRES_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "NAAM",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "OBJECTEN"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLTP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAPFACT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLAP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "WERK_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "WERKVERZOEK_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OPDRACHT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "WEER_ID",
+						"type": "bigint",
+						"precision": 19
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FACTWerk"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLAP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAPOBJECT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLAP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "BOT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "INGANGSDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "OBJECT_TYPE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DAEB_YN",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NAAM",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIMOBject"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLAP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAPRPOJECT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLAP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PROJECT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OMSCHRIJVING",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BEGROTEBEDRAGBTW",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "STARTDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EINDDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MEMO",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIMProject"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLAP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAPWEER')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLAP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "WEER_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "TEMPRATUUR",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "NEERSLAG",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIMWeer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLAP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAPWERKOPDRACHT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLAP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "OPDRACHT_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OPDRACHTDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "STARTDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EINDDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BON",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AFGEROND",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CODE",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "WERKSOORT_OMSCHRIJVING",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIMWerkopdracht"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLAP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OLAPWERKVERZOEK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OLAP",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "WERKVERZOEK_ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "OMSCHRIJVING",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MEMO",
+						"type": "nvarchar"
+					},
+					{
+						"name": "AFGEROND",
+						"type": "nvarchar"
+					},
+					{
+						"name": "MELDDATUM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BONJAAR",
+						"type": "nvarchar"
+					},
+					{
+						"name": "BONNMMR",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIMWerkverzoek"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OLAP')]"
+			]
+		}
+	]
+}

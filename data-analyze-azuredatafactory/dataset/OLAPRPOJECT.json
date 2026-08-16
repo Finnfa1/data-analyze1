@@ -1,0 +1,43 @@
+{
+	"name": "OLAPRPOJECT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLAP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "PROJECT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OMSCHRIJVING",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BEGROTEBEDRAGBTW",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "STARTDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EINDDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MEMO",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DIMProject"
+		}
+	}
+}

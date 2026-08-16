@@ -1,0 +1,35 @@
+{
+	"name": "ELEMENT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ELEMENT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "VOLGNUMMER",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "WAARDEAANDUIDING",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ELEMENT",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ELEMENT"
+		}
+	}
+}

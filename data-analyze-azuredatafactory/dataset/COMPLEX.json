@@ -1,0 +1,60 @@
+{
+	"name": "COMPLEX",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OLTP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BOT_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "OBJECTINGANGSDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "INGANGSDATUM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VOLGNUMMER",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TYPEN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DATUMEINDE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SUBCOMPLEX",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ETAGE",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GANG",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "COMPLEX_STATUS",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "COMPLEX"
+		}
+	}
+}
